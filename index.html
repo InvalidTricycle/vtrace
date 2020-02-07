@@ -80,6 +80,8 @@
 <!--信息窗-->
     <script src="https://webapi.amap.com/maps?v=1.4.15&key=99a55529922a1190e207fae9dd4acfac"></script>
     <script src="https://webapi.amap.com/loca?v=1.3.0&key=99a55529922a1190e207fae9dd4acfac"></script>
+	<script src="hospitals.js"></script>
+	<script src="patients.js"></script>
     <script>
         var map = new AMap.Map('container', {
             mapStyle: 'amap://styles/darkblue',
@@ -165,22 +167,31 @@ function openInfoWin(map, lngLat, content, pointType) {
 }
 
 {
-		var demoPoints = [//地点列表，待修改
-			{"lnglat":[116.323702,37.453995],"name":"九中狗","date":"2020-01-15","style":2},
-			{"lnglat":[116.298636,37.446615],"name":"五中狗","date":"2020-01-15","style":2},
-			{"lnglat":[116.360165,37.41758],"name":"新一中狗","date":"2020-01-15","style":2},
-			{"lnglat":[116.300659,37.467752],"name":"十中狗","date":"2020-01-15","style":2},
-			{"lnglat":[116.298683,37.454503],"name":"老一中狗","date":"2020-01-15","style":2},
-			{"lnglat":[116.312953,37.448052],"name":"二中狗","date":"2020-01-15","style":2},
-		];
-		
-		var Hospitals = [//医院列表，待修改
-			{"lnglat":[116.306505,37.451513],"name":"人民医院","number":"0534-2622120","style":2},
-			{"lnglat":[116.377163,37.442442],"name":"人民医院开发区","number":"0534-2622120","style":2},
-			{"lnglat":[116.29348,37.453858],"name":"市立医院","number":"0534-2622120","style":2},
-		];
+        var heatlayer = new Loca.HeatmapLayer({
+            map: map
+        });
+		//热力图层创建
+		heatlayer.setData(demoPoints, {
+			lnglat: 'lnglat'
+		});
+		//数据点添加
+        heatlayer.setOptions({
+            style: {
+                radius: 60,//热力半径
+				opacity: [0.1, 0.8],
+				// 颜色范围
+				color: {
+					1: '#f09999',
+					0.8: '#f0cb9c',
+					0.5: '#f0f9e8',
+					0.3: '#bae4bc',
+					0.05: '#6fa8dc',
+				}
+			}
+        });
+        heatlayer.render();
 }
-//数据列表
+//热图	完成
 
 {
 		var hosplayer = new Loca.PointLayer({
@@ -264,34 +275,6 @@ function openInfoWin(map, lngLat, content, pointType) {
         ptntlayer.render();
 }
 //病例点层
-
-
-{
-        var heatlayer = new Loca.HeatmapLayer({
-            map: map
-        });
-		//热力图层创建
-		heatlayer.setData(demoPoints, {
-			lnglat: 'lnglat'
-		});
-		//数据点添加
-        heatlayer.setOptions({
-            style: {
-                radius: 60,//热力半径
-				opacity: [0.1, 0.8],
-				// 颜色范围
-				color: {
-					1: '#f09999',
-					0.8: '#f0cb9c',
-					0.5: '#f0f9e8',
-					0.3: '#bae4bc',
-					0.05: '#6fa8dc',
-				}
-			}
-        });
-        heatlayer.render();
-}
-//热图	完成
 
 {	
 		var myDistance = [];
