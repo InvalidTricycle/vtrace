@@ -96,6 +96,7 @@ var infoWin;
 var tableDom;
 var title;
 var tip;
+var listener;
 
 function openInfoWin(map, lngLat, content, pointType) {
 	if (infoWin) {
@@ -150,6 +151,16 @@ function openInfoWin(map, lngLat, content, pointType) {
 
     tableDom.innerHTML = trStr;
     infoWin.open(map, lngLat);
+	
+	if (listener){
+	AMap.event.removeListener(listener);
+	}
+	var closewnd = function(){
+	if (infoWin) {
+    infoWin.close();
+    }};
+	listener = AMap.event.addDomListener(infoDom, "touchstart", closewnd);
+
 }
 }
 
@@ -171,15 +182,6 @@ function openInfoWin(map, lngLat, content, pointType) {
 }
 //数据列表
 
-    function showWindow(html){
-        document.getElementById("infoMsg").innerHTML = html;
-        document.getElementById("windowInfo").style.display = "block";
-    }
-    function hidewindow(){
-        document.getElementById("infoMsg").innerHTML  = '';
-        document.getElementById("windowInfo").style.display = "none";
-    }
-
 {
 		var hosplayer = new Loca.PointLayer({
 			eventSupport: true,
@@ -191,9 +193,6 @@ function openInfoWin(map, lngLat, content, pointType) {
                 return item.lnglat;}});
 		
         hosplayer.on('touchstart', function (ev) {
-			    console.log('Click target: ', ev.target) // 触发click事件的元素
-				console.log('Raw data: ', ev.rawData) // 触发元素对应的原始数据
-				console.log('Raw Event: ', ev.originalEvent) // 原始DomEvent事件
             var type = ev.type;
             // 事件类型
             var rawData = ev.rawData;
@@ -223,7 +222,7 @@ function openInfoWin(map, lngLat, content, pointType) {
 
         hosplayer.render();
 }
-//医院点层  待增加消息框
+//医院点层
 
 {
 		var ptntlayer = new Loca.PointLayer({
@@ -237,9 +236,6 @@ function openInfoWin(map, lngLat, content, pointType) {
 		
         ptntlayer.on('touchstart', function (ev) {
             // 事件类型
-			    console.log('Click target: ', ev.target) // 触发click事件的元素
-				console.log('Raw data: ', ev.rawData) // 触发元素对应的原始数据
-				console.log('Raw Event: ', ev.originalEvent) // 原始DomEvent事件
             var type = ev.type;
             // 当前元素的原始数据
             var rawData = ev.rawData;
@@ -267,7 +263,7 @@ function openInfoWin(map, lngLat, content, pointType) {
 
         ptntlayer.render();
 }
-//病例点层  待增加消息框
+//病例点层
 
 
 {
@@ -299,7 +295,6 @@ function openInfoWin(map, lngLat, content, pointType) {
 
 {	
 		var myDistance = [];
-		var nearCount=0;
 		AMap.plugin('AMap.Geolocation', function () {
 		var geolocation = new AMap.Geolocation({
 			enableHighAccuracy: true,//是否使用高精度定位，默认:true
@@ -324,12 +319,10 @@ function openInfoWin(map, lngLat, content, pointType) {
 				myDistance.push(AMap.GeometryUtil.distance(p1, p2));
 			}
 			myDistance.sort(function(a, b){return  a - b});
-			console.log(myDistance[0])
 			//离我最近
 			nearCount3=0;for (let i of myDistance){if (i<3000) {nearCount3+=1;}}
 			nearCount5=0;for (let i of myDistance){if (i<5000) {nearCount5+=1;}}
-			console.log(nearCount)
-			//1km之内
+			//5km之内
 			document.querySelector("#distance").innerText = "最近的疫情病例距我"+(myDistance[0]/1000).toFixed(2)+"公里";
 			document.querySelector("#near3").innerText = nearCount3+"个";
 			document.querySelector("#near5").innerText = nearCount5+"个";
@@ -340,7 +333,7 @@ function openInfoWin(map, lngLat, content, pointType) {
 			document.querySelector("#near-info").innerHTML = "";
 		}
 }
-//定位与标记  待接入
+//定位与标记
 	
     </script>
 </body>
