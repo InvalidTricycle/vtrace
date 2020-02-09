@@ -64,6 +64,7 @@
 		</div>
 		<div class="span3" id="near-info">
 			<p class="text-center">
+				<span>您所在的</span><span id="cityName">西红市</span><span>共发现 <strong id="cityCount">0 个</strong>病例，</span><br>
 				<span>3公里内有 <strong id="near3">0 个</strong>病例，</span>
 				<span>5公里内有 <strong id="near5">0 个</strong>病例</span>
 			</p>
@@ -82,6 +83,7 @@
     <script src="https://webapi.amap.com/loca?v=1.3.0&key=99a55529922a1190e207fae9dd4acfac"></script>
 	<script src="hospitals.js"></script>
 	<script src="patients.js"></script>
+	<script src="cities.js"></script>
     <script>
         var map = new AMap.Map('container', {
             mapStyle: 'amap://styles/darkblue',
@@ -314,6 +316,17 @@ function openInfoWin(map, lngLat, content, pointType) {
 			document.querySelector("#distance").innerText = "最近的疫情病例距我"+(myDistance[0]/1000).toFixed(2)+"公里";
 			document.querySelector("#near3").innerText = nearCount3+"个";
 			document.querySelector("#near5").innerText = nearCount5+"个";
+			for (let i of cities){
+				console.log(i);
+				console.log(data);
+				console.log("当前"+i.city+"，定位"+data.addressComponent.city);
+				if (i.city==data.addressComponent.city){
+				document.querySelector("#cityName").innerText = data.addressComponent.city;
+				document.querySelector("#cityCount").innerText = i.count+"个";
+				break;
+				}
+			}
+
 		}
 		function onError(data) {
 			console.log(data)
