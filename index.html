@@ -64,7 +64,7 @@
 		</div>
 		<div class="span3" id="near-info">
 			<p class="text-center">
-				<span>您所在的</span><span id="cityName">西红市</span><span>共发现 <strong id="cityCount">0 个</strong>病例，</span><br>
+				<span class="cityCount">您所在的</span><span class="cityCount" id="cityName">市</span><span class="cityCount">共发现 <strong id="cityCount">0 个</strong>病例，</span><br>
 				<span>3公里内有 <strong id="near3">0 个</strong>病例，</span>
 				<span>5公里内有 <strong id="near5">0 个</strong>病例</span>
 			</p>
@@ -317,9 +317,10 @@ function openInfoWin(map, lngLat, content, pointType) {
 			document.querySelector("#near3").innerText = nearCount3+"个";
 			document.querySelector("#near5").innerText = nearCount5+"个";
 			for (let i of cities){
-				console.log(i);
-				console.log(data);
-				console.log("当前"+i.city+"，定位"+data.addressComponent.city);
+				if (!data.addressComponent.city){
+				document.querySelector(".cityCount").innerText = "";
+				break;
+				}
 				if (i.city==data.addressComponent.city){
 				document.querySelector("#cityName").innerText = data.addressComponent.city;
 				document.querySelector("#cityCount").innerText = i.count+"个";
