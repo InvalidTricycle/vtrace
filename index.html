@@ -91,7 +91,7 @@
             center: [117.022086,36.661373],
 			resizeEnable: true,
             features: ['bg', 'road','point'],
-            viewMode: '3D'
+            //viewMode: '3D'
         });
 		//实例化地图
 
@@ -178,13 +178,21 @@ function openInfoWin(map, lngLat, content, pointType) {
             map: map
         });
 		//热力图层创建
-		heatlayer.setData(demoPoints, {
-			lnglat: 'lnglat'
+	var list = [];
+	for (let i of demoPoints) {
+        list.push({
+            lnglat: i.lnglat,
+            count: 10*Math.log(Math.abs(i.count))
+        	})
+    	}
+		heatlayer.setData(list, {
+			lnglat: 'lnglat',
+			value: 'count'
 		});
 		//数据点添加
         heatlayer.setOptions({
             style: {
-                radius: 60,//热力半径
+                radius: 30,//热力半径
 				opacity: [0.1, 0.8],
 				// 颜色范围
 				color: {
@@ -226,7 +234,7 @@ function openInfoWin(map, lngLat, content, pointType) {
 
 		hosplayer.setOptions({
             style: {
-                radius: 6,
+                radius: 8,
                 color: '#cc3300',
                 borderColor: '#c03000',
                 borderWidth: 0,
@@ -277,7 +285,7 @@ function openInfoWin(map, lngLat, content, pointType) {
 
 		ptntlayer.setOptions({
             style: {
-                radius: 5,
+                radius: 8,
                 color: '#3300cc',
                 borderColor: '#c03000',
                 borderWidth: 0,
