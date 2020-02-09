@@ -241,7 +241,16 @@ function openInfoWin(map, lngLat, content, pointType) {
         hosplayer.render();
 }
 //医院点层
-
+{
+		for (let i=0;i<demoPoints.length;i++){
+			if (demoPoints[i].type==2){
+				demoPoints[i].name+="<br>（具体社区未公布）"
+			}
+			if (demoPoints[i].count==-1){
+				demoPoints[i].count="未公布具体数字"
+			}
+		}
+}
 {
 		var ptntlayer = new Loca.PointLayer({
 			eventSupport: true,
@@ -260,7 +269,8 @@ function openInfoWin(map, lngLat, content, pointType) {
             // 原始鼠标事件
             var originalEvent = ev.originalEvent;
             openInfoWin(map, rawData.lnglat, {
-                '地点': rawData.name/*,
+                '地点': rawData.name,
+				'数目':rawData.count/*,
 				'发现日期':rawData.date*/
             }, "patients");
         });
