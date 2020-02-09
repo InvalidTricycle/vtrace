@@ -138,6 +138,10 @@ function openInfoWin(map, lngLat, content, pointType) {
 		tip.innerHTML= "<span style=\"font-weight:normal;font-size:8pt;color:#747982;\" >若病情严重，请前往该医院就诊，注意避开公共交通工具，必要时可联系上方电话或120寻求帮助</span>";
 		infoDom.appendChild(tip);			
 	}
+	if (pointType== "patients"){
+		tip.innerHTML= "<span style=\"font-weight:normal;font-size:8pt;color:#747982;\" >确诊病例均已被收治，无需过分担心</span>";
+		infoDom.appendChild(tip);			
+	}
 
     infoWin.setContent(infoDom);
     var trStr = '';
@@ -253,8 +257,8 @@ function openInfoWin(map, lngLat, content, pointType) {
             // 原始鼠标事件
             var originalEvent = ev.originalEvent;
             openInfoWin(map, rawData.lnglat, {
-                '地点': rawData.name,
-				'发现日期':rawData.date
+                '地点': rawData.name/*,
+				'发现日期':rawData.date*/
             }, "patients");
         });
 
