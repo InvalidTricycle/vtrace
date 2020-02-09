@@ -123,6 +123,7 @@ function openInfoWin(map, lngLat, content, pointType) {
 	}
 	if (!tip){
 		tip = document.createElement('div');
+		title.setAttribute("style","margin: 0 auto;text-align:center;");
 	}
 
 	if (pointType== "Hospital"){
@@ -130,7 +131,7 @@ function openInfoWin(map, lngLat, content, pointType) {
 		infoDom.appendChild(title);			
 	}
 	if (pointType== "patients"){
-		title.innerHTML= "<b><span style=\"font-weight:bold;font-size:12pt;\" >新型冠状病毒肺炎<br>感染病例信息</span></b>";
+		title.innerHTML= "<b><span style=\"font-weight:bold;font-size:12pt;\" >新型冠状病毒肺炎确诊病例信息</span></b>";
 		infoDom.appendChild(title);			
 	}		
 	infoDom.appendChild(tableDom);
@@ -139,7 +140,7 @@ function openInfoWin(map, lngLat, content, pointType) {
 		infoDom.appendChild(tip);			
 	}
 	if (pointType== "patients"){
-		tip.innerHTML= "<span style=\"font-weight:normal;font-size:8pt;color:#747982;\" >确诊病例均已被收治，无需过分担心</span>";
+		tip.innerHTML= "<span style=\"font-weight:normal;font-size:8pt;color:#747982;\" >为保护患者个人信息，具体姓名住址已进行隐藏处理<br>确诊病例均已被收治，无需过分担心</span>";
 		infoDom.appendChild(tip);			
 	}
 
